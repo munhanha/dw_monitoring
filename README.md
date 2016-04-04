@@ -3,7 +3,7 @@ Monitoring system (API) in nodeJS over HTTP
 
 The monitoring system is comprised of three parts:
 
-..::The agent:..
+..::The agent::..
 
 - Responsible for receiving all information in JSON format
 
