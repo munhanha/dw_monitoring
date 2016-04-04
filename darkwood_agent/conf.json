@@ -1,0 +1,16 @@
+{"Conf":{
+	"General":{
+		"VERSION":"1.1",
+		"AGENT_PORT":8000
+	},
+	"Database":{
+		"DB_HOST":"localhost",
+		"DB_PORT":5432,
+		"DB_NAME":"db",
+		"DB_USER":"user",
+		"DB_PASSWORD":"password"
+		},
+	"Cluster":{
+		"numProcesses": 2
+	}
+}}

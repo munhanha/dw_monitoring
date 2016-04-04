@@ -1,0 +1,32 @@
+{"Conf":{
+	"General":{
+		"VERSION":"1.1",
+		"API_PORT":7000
+	},
+	"Database":{
+		"DB_HOST":"localhost",
+		"DB_PORT":5432,
+		"DB_NAME":"db",
+		"DB_USER":"user",
+		"DB_PASSWORD":"password"
+	},
+	"Cluster":{
+		"numProcesses": 2
+	},
+	"Queries":{
+		"Websphere":{
+			"all":        "SELECT * FROM metrics WHERE data @> '{\"host\":\"REPLACE_HOST\",\"name\":\"was85\"}' order by date desc limit ($1);",
+			"trigram":    "SELECT date, (data::json#>>'{nodes,REPLACE_HOST}')::JSON->'REPLACE_TRIGRAM' as data  FROM metrics WHERE data @> '{\"host\":\"REPLACE_HOST\",\"name\":\"was85\"}' order by date desc limit ($1);",
+			"option":     "SELECT date, (data::json#>>'{nodes,REPLACE_HOST,REPLACE_TRIGRAM,REPLACE_OPTION}')::JSON as data  FROM metrics WHERE data @> '{\"host\":\"REPLACE_HOST\",\"name\":\"was85\"}' order by date desc limit ($1);",
+			"resource":   "SELECT date, (data::json#>>'{nodes,REPLACE_HOST,REPLACE_TRIGRAM,REPLACE_OPTION}')::JSON->'REPLACE_RESOURCE' as data  FROM metrics WHERE data @> '{\"host\":\"REPLACE_HOST\",\"name\":\"was85\"}' order by date desc limit ($1);",
+			"last_status":"SELECT date, (data::json#>>'{nodes,REPLACE_HOST,REPLACE_TRIGRAM,REPLACE_OPTION}')::JSON as data FROM metrics WHERE data @> '{\"host\":\"REPLACE_HOST\",\"name\":\"was85\"}' and data::json#>>'{nodes,REPLACE_HOST,REPLACE_TRIGRAM,REPLACE_OPTION,status}' = 'REPLACE_STATUS' order by date desc limit ($1);"
+		},
+		"Hosts":{
+			"websphere": "SELECT DISTINCT (data::json#>>'{host}') as host,(data::json#>>'{type}') as type FROM metrics WHERE data @> '{\"name\":\"artifact\"}' and date > date(now()) - 1;"
+		}
+	},
+	"Metrics":{
+		"max_limit":20,
+		"websphere_status":["STOPPED","RUNNING","STARTED"]
+	}
+}}

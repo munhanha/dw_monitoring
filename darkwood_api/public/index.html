@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Darkwood Monitoring System</title>
+      <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+      <script src="/js/jquery.min.js"></script>
+      <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+         <div class="container">
+            <ul class="nav navbar-nav">
+               <li class="active">
+                  <a href="/"><span class="glyphicon glyphicon-home"></span> Home </a>
+               </li>
+               <li>
+                  <a href="/api/demo_instance"><span class="glyphicon glyphicon-home"></span> Demo Instance </a>
+               </li>
+               <li>
+                  <a href="/api/demo_host"><span class="glyphicon glyphicon-home"></span> Demo Host </a>
+               </li>
+               <li>
+                  <a href="/api/demo_infrastructure"><span class="glyphicon glyphicon-home"></span> Demo Infrastructure </a>
+               </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+         </div>
+      </nav>
+      <div class="jumbotron text-center">
+         <div class="container">
+            <a href="/" class="lang-logo">
+            <img src="/logstash.png" height="243" width="152">
+            </a>
+            <h2>Getting Started with Darkwood (Monitoring API)</h2>
+            <p>A simple API for your BP2S monitoring needs</p>
+         </div>
+      </div>
+      <div class="container">
+         <div class="alert alert-info text-center" role="alert">
+            This application was made using NodeJS 
+         </div>
+         <hr>
+         <div class="row">
+            <div class="col-md-12">
+               <h3><span class="glyphicon glyphicon-info-sign"></span> How this app works</h3>
+               <ul>
+                  <li>You provide us with what you want, and that is all you will get.</li>
+                  <li>All of the information comes from <b>Peach</b> but it's stored kept and maintained by <b>Darkwood</b> in a separated infrastructure</li>
+                  <li>This API can be used for monitoring purposes but also to retrieve information regarding any artifact</li>
+                  <li>All output will <b>always</b> be a JSON object</li>
+                  <li>This is an API, so please consider it as such.</li>
+                  <li>This is a work in progress, so bear with us.</li>
+                  <li>We will add more and more functionalities according with your needs.</li>
+                  <li>Understand that some operations take more time than other.</li>
+               </ul>
+            </div>
+         </div>
+         <!-- row -->
+		 <div class="row">
+            <div class="col-md-12">
+               <h3><span class="glyphicon glyphicon-link"></span>Websphere Operations</h3>
+               <ul>
+                  <b>Websphere</b> 
+                  <li><b>/api/:server/websphere/</b>, get all available metrics for that server regarding Websphere(this includes IHS server).</li>
+                  <li><b>/api/:server/websphere/:trigram?/</b>, all websphere metrics for the specific trigram</li>
+                  <li><b>/api/:server/websphere/:trigram?/:(was-trigram-n || https-trigram)?/</b>, all <b>WAS or HTTP</b> metrics for the specific trigram</li>
+                  <li><b>/api/:server/websphere/:trigram?/:(was-trigram-n || https-trigram)?/?last_status=:status</b>, gets you the last time the was or http had the selected status. Choices:<b>["STOPPED","RUNNING","STARTED"]</b> limit will always be 1. (<b>Not</b> compatible with /:resource?)</li>
+                  <li><b>/api/:server/websphere/:trigram?/:(was-trigram-n || https-trigram)?/:resource?</b>, specific resource (status,jdbc,jvm...) was or http metric for the specific trigram</li>
+               </ul>
+            </div>
+         </div>
+         <!-- row -->
+         <div class="row">
+            <div class="col-md-6">
+               <h3><span class="glyphicon glyphicon-link"></span>Database Operations</h3>
+               <ul>
+                  <b>Database</b>
+                  <li> Currently not available </li>
+               </ul>
+            </div>
+            <div class="col-md-6">
+               <h3><span class="glyphicon glyphicon-link"></span>Machine Operations</h3>
+               <ul>
+                  <b>Machine</b>
+                  <li> Currently not available </li>
+               </ul>
+            </div>
+         </div>
+         <!-- row -->
+         <div class="row">
+            <div class="col-md-6">
+               <h3><span class="glyphicon glyphicon-link"></span>Host Operations</h3>
+               <ul>
+                  <b>Hosts</b>
+                  <li> <b>/api/hosts/websphere/</b>, get all current hosts that have <b>Websphere</b> instances running plus the enviroment it's in. (Always returns a nameless list)</li>
+               </ul>
+            </div>
+            <div class="col-md-6">
+				<h3><span class="glyphicon glyphicon-link"></span> Optional Arguments </h3>
+               <ul>
+                  <b>Common operations</b>
+                  <li><b>limit=N</b> retrives N results, the default is 1, the result value will always be a list (even if empty)</li>
+               </ul>
+            </div>
+         </div>
+         <!-- row -->
+         <div class="row">
+            <div class="col-md-6">
+               <h3><span class="glyphicon glyphicon-info-sign"></span> Hands on examples</h3>
+               <ul>
+                  <li><b><a href="/api/s00vl9937872/websphere/bch/was-bch-1/status" target="_blank">/api/s00vl9937872/websphere/bch/was-bch-1/status </a></b> This would get you the status of BCH WAS server in the s00vl9937872 host</li>
+                  <li><b><a href="/api/s00vl9937872/websphere/bch/was-bch-1/status/?limit=3" target="_black">/api/s00vl9937872/websphere/bch/was-bch-1/status/?limit=3 </a></b> This would get you the last <b>3</b> status of BCH WAS server in the s00vl9937872 host</li>
+                  <li><b><a href="/api/s00vl9937879/websphere/bch/was-bch-1/?last_status=STOPPED" target="_black">/api/s00vl9937879/websphere/bch/was-bch-1/?last_status=STOPPED </a></b> Will return the datetime of the last time the was-bch-1 instance in the s00vl9937879 host was STOPPED (not case sensetive)</li>
+               </ul>
+            </div>
+			<div class="col-md-6">
+               <h3><span class="glyphicon glyphicon-info-sign"></span> Demos </h3>
+               <ul>
+                  <b>Demos</b>
+				  <li> All is fine and good but what can I do with this API? Have a look on some of our Demos. </li>
+                  <li><b><a href="/api/demo_instance" target="_blank">/api/demo_instance </a></b> Monitoring a single instance</li>
+                  <li><b><a href="/api/demo_host" target="_blank">/api/demo_host </a></b> Monitoring a single host</li>
+                  <li><b><a href="/api/demo_infrastructure" target="_blank">/api/demo_infrastructure </a></b> Monitoring a single infrastructure</li>
+               </ul>
+            </div>
+         </div>
+         <!-- row -->		 
+         <div class="alert alert-info text-center" role="alert">
+            Have something to say? We would love to hear from you. Please send an e-mail to <a href="mailto:jose.anjos@externe.bnpparibas.com?Subject=Darkwood" target="_top">the creators</a>
+         </div>
+      </div>
+   </body>
+</html>
